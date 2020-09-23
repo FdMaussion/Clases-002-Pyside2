@@ -1,10 +1,14 @@
 import sys
 
 import requests
+from PySide2 import QtWidgets
 from PySide2.QtCore import Slot, QDate
 from PySide2.QtWidgets import QMainWindow, QApplication
 
 from ui_principal import Ui_MainWindow
+from ventana_lista import ListWindow
+
+from persona import Persona
 
 
 class MainWindow(QMainWindow):
@@ -14,6 +18,9 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.ui.le_fecha_registro.setDate(QDate().currentDate())
         self.init_provincias()
+        self.personas = []
+        self.list_window = ListWindow()
+        self.list_window.show()
 
     def init_provincias(self):
         url = "https://apis.datos.gob.ar/georef/api/provincias?orden=nombre&campos=nombre"
@@ -35,7 +42,19 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def register(self):
-        pass
+        persona = Persona(
+            self.ui.le_dni.text(),
+            self.ui.le_nombre.text(),
+            self.ui.le_apellido.text(),
+            self.ui.le_edad.text(),
+            self.ui.cb_sexo.currentText(),
+            self.ui.cb_provincia.currentText(),
+            self.ui.le_fecha_registro.date()
+        )
+        print(persona)
+        self.personas.append(persona)
+        self.clear_all()
+        self.list_window.agregar_row(persona)
 
 
 if __name__ == "__main__":
