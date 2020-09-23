@@ -16,9 +16,12 @@ class MainWindow(QMainWindow):
         self.init_provincias()
 
     def init_provincias(self):
-        url = "https://apis.datos.gob.ar/georef/api/provincias"
-        provincias = requests.get(url).json()["provincias"]
-        self.ui.cb_provincia.addItems(provincias)
+        url = "https://apis.datos.gob.ar/georef/api/provincias?orden=nombre&campos=nombre"
+        provinces = requests.get(url).json()["provincias"]
+        for i, province in enumerate(provinces):
+            province_name = province["nombre"]
+            self.ui.cb_provincia.addItem(province_name)
+            self.ui.cb_provincia.setItemText(i, province_name)
 
     @Slot()
     def clear_all(self):
