@@ -34,6 +34,7 @@ class Ui_ListWindow(object):
         __qtablewidgetitem3 = QTableWidgetItem()
         self.tb_covid.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         self.tb_covid.setObjectName(u"tb_covid")
+        self.tb_covid.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         self.verticalLayout.addWidget(self.tb_covid)
 
